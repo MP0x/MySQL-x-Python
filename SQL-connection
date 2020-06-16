@@ -1,0 +1,34 @@
+import mysql.connector
+
+#Conectando com o servidor.
+mydb = mysql.connector.connect(
+  host="127.0.0.1",
+  user="root",
+  passwd=""
+)
+
+print(mydb)
+
+
+mycursor = mydb.cursor()
+#mycursor.execute("show databases")
+mycursor.execute("use teste")
+mycursor.execute("select * from passwords")
+
+myresult = mycursor.fetchall()
+
+#Inserindo valores a tabela.
+mycursor.execute("insert into passwords values (%s,%s,%s,%s)", ("art.com", "1266645", "Mané", "default"))
+mydb.commit()
+
+#este print mostra apenas a seleção antes da inserção do novo valor(es).
+print (myresult)
+
+#estes codigos abaixo irá trazer o print mostrando tbm as novas inserções.
+mycursor_2 = mydb.cursor()
+
+mycursor.execute("select * from passwords")
+
+myresult = mycursor.fetchall()
+
+print (myresult)
